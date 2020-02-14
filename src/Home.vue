@@ -24,8 +24,8 @@
         <li v-for="blog in blogs"> -->
       <div
         class="card ml-5 mr-5 mt-5"
-        v-for="blog in blogs"
-        :key="blog.id"
+        v-for="(blog, index) in blogs"
+        :key="index"
       >
         <div class="card-header alert-light text-info">
           <h3>{{ blog.blogTitle }}</h3>
@@ -51,10 +51,11 @@ import History from "./components/History";
 import { eventBus } from "./main";
 
 export default {
-  data() {
-    return {
-      blogs: []
-    };
+  props: {
+      blogs: {
+          type: Array,
+          required: true
+      }
   },
   methods: {
     getDate() {
@@ -62,15 +63,8 @@ export default {
       return timeNow.toLocaleDateString();
     }
   },
-  computed: {},
   components: {
     "blog-history": History
-  },
-  created() {
-    eventBus.$on("newBlogTitle", data => {
-      console.log(data);
-      this.blogs.push(data);
-    });
   }
 };
 </script>

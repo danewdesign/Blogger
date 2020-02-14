@@ -8,7 +8,6 @@
                 class="form-control" 
                 id="blogTitle"
                 v-model="blogTitle">
-                <p>{{blogTitle}}</p>
 
            <label class="mt-3" for="blogBody"><h4>Blog Body</h4></label>
            <textarea 
@@ -18,10 +17,9 @@
                 cols="30" 
                 rows="10"
                 v-model="blogBody"></textarea>
-                <p>{{blogBody}}</p>
             <button 
                 class="btn btn-lg btn-dark mt-3"
-                @click="postBlog">Post Blog</button>
+                @click.prevent="postBlog">Post Blog</button>
        </form>
     </div>
 </template>
@@ -38,13 +36,9 @@ export default {
     },
     methods: {
         postBlog() {
-            let blogObj = JSON.parse(this.blogTitle);
-            eventBus.$emit('newBlogTitle', blogObj);
-            console.log(blogObj);
+            eventBus.$emit('newBlog', { blogTitle: this.blogTitle, blogBody: this.blogBody });
+            this.$router.push('/');
         }
-    },
-    computed: {
-  
     }
 }
 </script>
